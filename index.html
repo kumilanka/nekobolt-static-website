@@ -92,32 +92,49 @@
         // Theme Toggle Script
         const themeToggle = document.getElementById('theme-toggle');
         const body = document.body;
-        const currentTheme = localStorage.getItem('theme');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 
-        // Apply saved theme on load
-        if (currentTheme === 'dark') {
-            body.classList.add('dark-theme');
-            themeToggle.textContent = '🌙'; // Moon for dark theme
-            themeToggle.setAttribute('aria-label', 'Switch to light theme');
-        } else {
-             themeToggle.textContent = '☀️'; // Sun for light theme
-             themeToggle.setAttribute('aria-label', 'Switch to dark theme');
+        function applyTheme(theme) {
+            if (theme === 'dark') {
+                body.classList.add('dark-theme');
+                themeToggle.textContent = '🌙';
+                themeToggle.setAttribute('aria-label', 'Switch to light theme');
+            } else {
+                body.classList.remove('dark-theme');
+                themeToggle.textContent = '☀️';
+                themeToggle.setAttribute('aria-label', 'Switch to dark theme');
+            }
         }
 
-
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-theme');
-            let theme = 'light';
-            if (body.classList.contains('dark-theme')) {
-                theme = 'dark';
-                themeToggle.textContent = '🌙';
-                 themeToggle.setAttribute('aria-label', 'Switch to light theme');
+        // Determine initial theme: 1. LocalStorage, 2. System Pref, 3. Default (Dark)
+        let currentTheme = localStorage.getItem('theme');
+        if (!currentTheme) {
+            if (prefersDarkScheme.matches) {
+                currentTheme = 'dark';
             } else {
-                 themeToggle.textContent = '☀️';
-                 themeToggle.setAttribute('aria-label', 'Switch to dark theme');
+                currentTheme = 'dark'; // Default to dark if no system pref or system is light
             }
-            localStorage.setItem('theme', theme);
+        }
+
+        // Apply the determined theme on initial load
+        applyTheme(currentTheme);
+
+        // Listener for the toggle button
+        themeToggle.addEventListener('click', () => {
+            let newTheme = body.classList.contains('dark-theme') ? 'light' : 'dark';
+            applyTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
         });
+
+        // Optional: Listen for changes in system preference
+        // This will automatically switch the theme if the system setting changes
+        // while the user is on the page, ONLY if they haven't manually toggled.
+        // Remove this block if you don't want this behavior.
+        // prefersDarkScheme.addEventListener('change', (e) => {
+        //     if (!localStorage.getItem('theme')) { // Only change if no manual preference is set
+        //         applyTheme(e.matches ? 'dark' : 'light');
+        //     }
+        // });
 
         // Email Obfuscation Script (from original file)
         document.addEventListener("DOMContentLoaded", function() {
