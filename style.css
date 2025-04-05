@@ -91,6 +91,16 @@ nav a:hover, nav a.active {
     color: var(--bg-color);
 }
 
+/* --- Hamburger Menu Button (Default: Hidden) --- */
+.hamburger-button {
+    display: none; /* Hidden by default, shown on mobile via media query */
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.8rem; /* Adjust size as needed */
+    cursor: pointer;
+    padding: 0 5px; /* Small padding */
+}
 
 h1, h2, h3 {
     font-family: var(--heading-font);
@@ -154,14 +164,60 @@ section {
 /* Responsive */
 @media (max-width: 768px) {
     .header-content {
-        flex-direction: column;
-        gap: 15px;
+        flex-direction: row; /* Keep logo/buttons on one row */
+        justify-content: space-between; /* Space out logo and buttons */
+        align-items: center; /* Vertically align items */
+        /* Remove gap as spacing is handled by justify-content */
     }
 
-    nav ul {
-        padding-top: 10px;
-        justify-content: center;
+    nav#main-nav ul {
+        display: none; /* Hide horizontal nav list */
+        flex-direction: column; /* Stack items vertically */
+        position: absolute; /* Take out of flow */
+        top: 70px; /* Position below header (adjust based on header height) */
+        left: 0;
+        width: 100%;
+        background-color: var(--bg-color); /* Match body background */
+        padding: 10px 0; /* Vertical padding */
+        border-bottom: 1px solid rgba(128, 128, 128, 0.3);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow */
+        z-index: 1000; /* Ensure it's on top */
+        gap: 0; /* Remove horizontal gap */
     }
+
+    nav#main-nav.mobile-nav-active ul {
+        display: flex; /* Show the nav list when active */
+    }
+
+    nav#main-nav li {
+        width: 100%;
+        text-align: center; /* Center nav links */
+    }
+
+    nav#main-nav a {
+        display: block; /* Make links take full width */
+        padding: 10px 0; /* Add padding for easier tapping */
+        border-bottom: 1px solid rgba(128, 128, 128, 0.1); /* Separator lines */
+    }
+    
+    nav#main-nav li:last-child a {
+        border-bottom: none;
+    }
+    
+    nav a:hover, nav a.active {
+         background-color: rgba(52, 199, 89, 0.1); /* Subtle hover/active background */
+         color: var(--primary-color); /* Keep color change */
+    }
+
+    .hamburger-button {
+        display: block; /* Show hamburger button on mobile */
+        order: 3; /* Place it after logo and theme toggle potentially */
+    }
+    
+    /* Optional: Adjust theme toggle position if needed */
+    /* #theme-toggle {
+        order: 2;
+    } */
 
     h1 { font-size: 1.8rem; }
     h2 { font-size: 1.3rem; }
