@@ -9,19 +9,15 @@
 :root {
     --primary-color: #34C759; /* Green */
     --accent-color: #FF2D55; /* Pink */
-    --light-bg: #F2F2F7;
+    --light-bg: #F2F2F7; /* Keep for reference maybe? */
     --dark-bg: #1C1C1E;
-    --light-text: #1C1C1E;
+    --light-text: #1C1C1E; /* Keep for reference maybe? */
     --dark-text: #FFFFFF;
 
     --heading-font: 'Montserrat', sans-serif;
     --body-font: 'Inter', sans-serif;
 
-    --bg-color: var(--light-bg);
-    --text-color: var(--light-text);
-}
-
-body.dark-theme {
+    /* Force dark theme colors */
     --bg-color: var(--dark-bg);
     --text-color: var(--dark-text);
 }
@@ -30,7 +26,8 @@ body {
     font-family: var(--body-font);
     background-color: var(--bg-color);
     color: var(--text-color);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Removed transition as theme doesn't switch */
+    /* transition: background-color 0.3s ease, color 0.3s ease; */
     line-height: 1.6;
 }
 
@@ -296,10 +293,6 @@ section {
     color: gray; /* Subtle color for the quote */
 }
 
-body.dark-theme .game-short-description {
-    color: lightgray;
-}
-
 .key-features {
     margin-bottom: 20px;
     padding-left: 20px; /* Indent list items */
@@ -347,10 +340,6 @@ body.dark-theme .game-short-description {
     font-size: 1.2em;
     margin-top: 10px;
     color: gray;
-}
-
-body.dark-theme .tagline {
-    color: lightgray;
 }
 
 #quick-links {
